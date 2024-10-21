@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Avatar } from "@mui/material";
-import pr from '../assets/pr.png'
-import star from '../assets/Star.png'
-import issue from '../assets/issue.png'
-import { styled } from "@mui/material/styles";
-import dev from '../assets/dev.png'
+import pr from '../assets/pr.png';
+import star from '../assets/Star.png';
+import issue from '../assets/issue.png';
+import dev from '../assets/dev.png';
 import { BarChart } from "@mui/x-charts/BarChart";
 import { axisClasses } from "@mui/x-charts/ChartsAxis";
 import StatCard from "../components/StatCard";
@@ -22,31 +21,22 @@ const dataset = [
 
 const valueFormatter = (value) => `${value} contributions`;
 
-
-
 const chartSetting = {
   yAxis: [
     {
       label: "Contributions",
-    },      
-    {
-      fill: 'white'
-    }
+    },
   ],
-  series: [
-    { dataKey: "seoul", label: "Contribution Activity", valueFormatter },
-  ],  
-
+  series: [{ dataKey: "seoul", label: "Contribution Activity", valueFormatter }],
   height: 400,
   xAxis: [{ dataKey: "day", scaleType: "band", label: "Day of the Week" }],
   sx: {
     [`& .${axisClasses.directionY} .${axisClasses.label}`]: {
-        transform: "translateX(-10px)",
-    },   
+      transform: "translateX(-10px)",
+    },
     [`& .${axisClasses.directionX} .${axisClasses.label}`]: {
       transform: "translateX(-10px)",
-    },   
-
+    },
   },
 };
 
@@ -55,11 +45,12 @@ const DashboardPage = () => {
   const [stats, setStats] = useState({});
   const [error, setError] = useState(null);
 
-  // Simulated backend JSON data
-
   const backendData = [
     {
-      contributions: { issues: null, pulls: null },
+      contributions: {
+        issues: null,
+        pulls: null
+      },
       repo_name: "Hacktoberfest_2024-Android_Plant_Detection",
     },
     {
@@ -96,7 +87,6 @@ const DashboardPage = () => {
       }
     });
 
-    // Return calculated stats
     return {
       pullRequests,
       issuesRaised,
@@ -120,7 +110,7 @@ const DashboardPage = () => {
   }
 
   return (
-    <div className=" text-black min-h-screen">
+    <div className="text-black min-h-screen">
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col sm:flex-row justify-between items-center mb-8">
           <h1 className="text-2xl sm:text-3xl mb-4 sm:mb-0">
@@ -129,11 +119,10 @@ const DashboardPage = () => {
           <Avatar src="/broken-image.jpg" />
         </div>
 
-        <Hero username={'User'} pr={3} />
+        <Hero username={"User"} pr={3} />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {
-          [
+          {[
             {
               title: "Pull Requests",
               icon: pr,
@@ -153,16 +142,14 @@ const DashboardPage = () => {
               title: "Repos Contributed",
               icon: dev,
               value: stats.reposContributed,
-            }
+            },
           ].map((ele, index) => (
             <StatCard key={index} title={ele.title} icon={ele.icon} value={ele.value} />
-          ))
-        }
-      </div>
-
+          ))}
+        </div>
 
         <div className="flex flex-col lg:flex-row gap-8">
-          <div className="w-full lg:w-1/2 bg-white bg-opacity-10  text-black  shadow-md  rounded-lg p-4">
+          <div className="w-full lg:w-1/2 bg-white bg-opacity-10 text-black shadow-md rounded-lg p-4">
             <BarChart
               dataset={dataset}
               xAxis={[
@@ -172,38 +159,28 @@ const DashboardPage = () => {
                   tickPlacement: "middle",
                   tickLabelPlacement: "middle",
                   label: "Days of the Week",
-                  borderRadius: '10'
                 },
               ]}
               {...chartSetting}
             />
           </div>
-          <div className="w-full lg:w-1/2 bg-white bg-opacity-10  shadow-md  rounded-lg p-4">
+          <div className="w-full lg:w-1/2 bg-white bg-opacity-10 shadow-md rounded-lg p-4">
             <h2 className="text-lg mb-4">Repository Contributions</h2>
             <div className="space-y-2">
               {data.map((repo, index) => (
-                <div key={index} className="flex flex-col gap-2  bg-white bg-opacity-10 p-2 rounded-lg">
+                <div key={index} className="flex flex-col gap-2 bg-white bg-opacity-10 p-2 rounded-lg">
                   <h3 className="text-base font-bold">{repo.repo_name}</h3>
                   <div>
                     <strong>Issues:</strong>
                     {repo.contributions.issues ? (
                       repo.contributions.issues.map((issue, i) => (
                         <div key={i}>
-                          <a
-                            href={issue.html_url}
-                            className="text-blue-500 underline"
-                          >
+                          <a href={issue.html_url} className="text-blue-500 underline">
                             {issue.title}
                           </a>
                           <p>State: {issue.state}</p>
-                          <p>
-                            Created:{" "}
-                            {new Date(issue.created_at).toLocaleDateString()}
-                          </p>
-                          <p>
-                            Updated:{" "}
-                            {new Date(issue.updated_at).toLocaleDateString()}
-                          </p>
+                          <p>Created: {new Date(issue.created_at).toLocaleDateString()}</p>
+                          <p>Updated: {new Date(issue.updated_at).toLocaleDateString()}</p>
                         </div>
                       ))
                     ) : (
@@ -211,9 +188,18 @@ const DashboardPage = () => {
                     )}
                   </div>
                   <div>
-                    <strong>Pulls:</strong>
+                    <strong>Pull Requests:</strong>
                     {repo.contributions.pulls ? (
-                      <p>{repo.contributions.pulls}</p>
+                      repo.contributions.pulls.map((pull, i) => (
+                        <div key={i}>
+                          <a href={pull.html_url} className="text-blue-500 underline">
+                            {pull.title}
+                          </a>
+                          <p>State: {pull.state}</p>
+                          <p>Created: {new Date(pull.created_at).toLocaleDateString()}</p>
+                          <p>Updated: {new Date(pull.updated_at).toLocaleDateString()}</p>
+                        </div>
+                      ))
                     ) : (
                       <p>No contributions available</p>
                     )}
