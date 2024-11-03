@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Homelogo from '../assets/Homelogo.png';
 import Navbar from './Navbar';
+import { startGithubAuthentication } from '../api/github';
 
 const Landingpage = () => {
   return (
@@ -19,9 +20,17 @@ const Landingpage = () => {
         {/* Get Started Button */}
         <Link to="/repo">
           <button className="bg-black text-white py-2 px-6 sm:px-8 text-base sm:text-lg md:text-xl lg:text-2xl mb-6 lg:mb-10 hover:bg-gray-700 transition-colors rounded-lg">
-            GET STARTED NOW..
+            Explore Repositories
           </button>
         </Link>
+     
+          <button 
+          className="bg-black text-white py-2 px-6 sm:px-8 text-base sm:text-lg md:text-xl lg:text-2xl mb-6 lg:mb-10 hover:bg-gray-700 transition-colors rounded-lg"
+          onClick={() => startGithubAuthentication()}
+          >
+            Login with Github
+          </button>
+       
 
         {/* Logo Image */}
         <img
